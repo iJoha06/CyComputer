@@ -1,0 +1,101 @@
+﻿@model CyComputer.Models.GuiaEntradum
+
+@{
+    ViewData["Title"] = "Crear Guía de Entrada";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<form asp-action="Create" method="post">
+    <div class="form-group">
+        <label asp-for="IdProveedor" class="control-label">Proveedor</label>
+        <select asp-for="IdProveedor" class="form-control" asp-items="@(new SelectList(ViewData["Proveedores"] as IEnumerable<CyComputer.Models.Proveedore>, "IdProveedor", "Nombre"))">
+            <option value="">Seleccione un proveedor</option>
+        </select>
+        <span asp-validation-for="IdProveedor" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="IdAlmacen" class="control-label">Almacén</label>
+        <select asp-for="IdAlmacen" class="form-control" asp-items="@(new SelectList(ViewData["Almacens"] as IEnumerable<CyComputer.Models.Almacen>, "IdAlmacen", "Nombre"))">
+            <option value="">Seleccione un almacén</option>
+        </select>
+        <span asp-validation-for="IdAlmacen" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Fecha" class="control-label">Fecha</label>
+        <input asp-for="Fecha" class="form-control" />
+        <span asp-validation-for="Fecha" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Descripcion" class="control-label">Descripción</label>
+        <textarea asp-for="Descripcion" class="form-control"></textarea>
+        <span asp-validation-for="Descripcion" class="text-danger"></span>
+    </div>
+
+    <h4>Productos</h4>
+    <div id="productos">
+        <div class="form-group row">
+            <div class="col-md-4">
+                <label>Producto</label>
+                <select name="detalleEntradas[0].IdProducto" class="form-control">
+                    <option value="">Seleccione un producto</option>
+                    @foreach (var producto in ViewData["Productos"] as List<CyComputer.Models.Producto>)
+                    {
+                        <option value="@producto.IdProducto">@producto.Nombre</option>
+                    }
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label>Cantidad</label>
+                <input type="number" name="detalleEntradas[0].Cantidad" class="form-control" min="0" />
+            </div>
+            <div class="col-md-3">
+                <label>Precio Unitario</label>
+                <input type="number" name="detalleEntradas[0].Precio" class="form-control" step="0.01" min="0" />
+            </div>
+            <div class="col-md-2">
+                <button type="button" class="btn btn-success mt-4" onclick="addProducto()">Añadir más</button>
+            </div>
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Guardar</button>
+</form>
+
+@section Scripts {
+    <script>
+        let index = 1;
+        function addProducto() {
+            let productoTemplate = `
+                        <div class="form-group row">
+                            <div class="col-md-4">
+                                <select name="detalleEntradas[${index}].IdProducto" class="form-control">
+                                    <option value="">Seleccione un producto</option>
+        @foreach (var producto in ViewData["Productos"] as List<CyComputer.Models.Producto>)
+        {
+                                            <option value="@producto.IdProducto">@producto.Nombre</option>
+        }
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <input type="number" name="detalleEntradas[${index}].Cantidad" class="form-control" min="0" />
+                            </div>
+                            <div class="col-md-3">
+                                <input type="number" name="detalleEntradas[${index}].Precio" class="form-control" step="0.01" min="0" />
+                            </div>
+                            <div class="col-md-2">
+                                <button type="button" class="btn btn-danger" onclick="removeProducto(this)">Eliminar</button>
+                            </div>
+                        </div>`;
+            $('#productos').append(productoTemplate);
+            index++;
+        }
+
+        function removeProducto(button) {
+            $(button).closest('.form-group.row').remove();
+        }
+    </script>
+}

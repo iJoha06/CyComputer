@@ -1,0 +1,36 @@
+﻿@model IEnumerable<CyComputer.Models.DetalleCompra>
+
+@{
+    ViewData["Title"] = "Pedidos";
+}
+
+<h1>Pedidos</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Crear Nuevo Pedido</a>
+</p>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Producto</th>
+            <th>Cantidad</th>
+            <th>Costo Unitario</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.IdProductoNavigation.Nombre</td>
+                <td>@item.Cantidad</td>
+                <td>@item.CostoUnitario $</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.IdDetalleCompra" class="btn btn-warning btn-sm">Editar</a>
+                    <a asp-action="Delete" asp-route-id="@item.IdDetalleCompra" class="btn btn-danger btn-sm">Eliminar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

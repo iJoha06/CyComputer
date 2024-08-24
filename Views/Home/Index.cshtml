@@ -1,0 +1,76 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menú Principal de Hardware</title>
+    <link rel="stylesheet" href="~/css/menu.css" asp-append-version="true">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h2>Bienvenidos a C&Computer</h2>
+            <div class="line"></div>
+            <h1>OFERTAS Y PROMOCIONES</h1>
+            <a href="" class="ctn">ENTERATE ACÁ</a>
+        </div>
+    </header>
+
+    <main>
+        <section id="about-us">
+            <div class="container">
+                <h2>Sobre Nosotros</h2>
+                <p>En C&Computer, nos especializamos en ofrecer los mejores periféricos para tu computadora. Desde teclados mecánicos hasta ratones ergonómicos, tenemos todo lo que necesitas para mejorar tu experiencia informática. Nuestra misión es proporcionar productos de alta calidad a precios competitivos, con un excelente servicio al cliente.</p>
+            </div>
+        </section>
+
+        <section id="products">
+            <div class="container">
+                <h2>Nuestros Productos</h2>
+                <div class="product-list">
+                    <article class="product-item">
+                        <img src="~/img/teclado.jpg" alt="Teclado" />
+                        <h3>Teclado Mecánico</h3>
+                        <p>Teclado mecánico REDRAGON con retroiluminación RGB y teclas programables.</p>
+                    </article>
+                    <article class="product-item">
+                        <img src="~/img/mouserazer.jpg" alt="Ratón" />
+                        <h3>Mouse Razer </h3>
+                        <p>Ratón ergonómico con ajuste de DPI y diseño cómodo.</p>
+                    </article>
+                    <!-- Agrega más productos aquí -->
+                </div>
+            </div>
+        </section>
+
+        <section id="special-offers">
+            <div class="container">
+                <h2>Ofertas Especiales</h2>
+                <p>No te pierdas nuestras ofertas especiales en productos seleccionados. ¡Visita nuestra tienda para obtener los mejores descuentos!</p>
+                <a href="#contact" class="ctn">Contáctanos para más información</a>
+            </div>
+        </section>
+
+        <section id="contact">
+            <div class="container">
+                <h2>Contáctenos</h2>
+                <p>Para cualquier consulta, no dudes en ponerte en contacto con nosotros. Estamos aquí para ayudarte.</p>
+                <address>
+                    <p><strong>Dirección:</strong> Av. Uruguay 191, Centro Lima, Peru</p>
+                    <p><strong>Teléfono:</strong> 992 591 551 </p>
+                    <p><strong>Email:</strong> <a href="mailto:info@ccomputer.com">info@ccomputer.com</a></p>
+                </address>
+            </div>
+        </section>
+    </main>
+</body>
+</html>
+
+
+

@@ -1,0 +1,57 @@
+﻿@model CyComputer.Models.GuiaEntradum
+
+@{
+    ViewData["Title"] = "Detalles de la Guía de Entrada";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<dl class="row">
+    <dt class="col-sm-2">
+        Proveedor:
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.IdProveedorNavigation.Nombre)
+    </dd>
+    <dt class="col-sm-2">
+        Almacén:
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.IdAlmacenNavigation.Nombre)
+    </dd>
+    <dt class="col-sm-2">
+        Fecha:
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.Fecha)
+    </dd>
+    <dt class="col-sm-2">
+        Descripción:
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.Descripcion)
+    </dd>
+</dl>
+
+<h3>Productos</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Producto</th>
+            <th>Cantidad</th>
+            <th>Precio</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.DetalleEntrada)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.IdProductoNavigation.Nombre)</td>
+                <td>@Html.DisplayFor(modelItem => item.Cantidad)</td>
+                <td>@Html.DisplayFor(modelItem => item.Precio)</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a asp-action="Index" class="btn btn-primary">Volver a la lista</a>

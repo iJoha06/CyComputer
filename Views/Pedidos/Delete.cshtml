@@ -1,0 +1,39 @@
+﻿@model CyComputer.Models.DetalleCompra
+
+@{
+    ViewData["Title"] = "Eliminar Pedido";
+}
+
+<h1>Eliminar Pedido</h1>
+
+<h3>¿Estás seguro de que deseas eliminar este pedido?</h3>
+<div>
+    <h4>Pedido</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            Producto
+        </dt>
+        <dd class="col-sm-10">
+            @Model.IdProductoNavigation.Nombre
+        </dd>
+        <dt class="col-sm-2">
+            Cantidad
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Cantidad
+        </dd>
+        <dt class="col-sm-2">
+            Costo Unitario
+        </dt>
+        <dd class="col-sm-10">
+            @Model.CostoUnitario:C
+        </dd>
+    </dl>
+
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="IdDetalleCompra" />
+        <input type="submit" value="Eliminar" class="btn btn-danger" />
+        <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>

@@ -1,0 +1,39 @@
+﻿@model IEnumerable<CyComputer.Models.Compra>
+
+@{
+    ViewData["Title"] = "Pedidos de Compra";
+}
+
+<div class="container mt-5">
+    <h2>@ViewData["Title"]</h2>
+    <a href="@Url.Action("Create")" class="btn btn-primary mb-3">Crear Pedido</a>
+    <table class="table table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th>ID</th>
+                <th>Proveedor</th>
+                <th>Fecha</th>
+                <th>Total</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.IdCompra</td>
+                    <td>@item.IdProveedorNavigation?.Nombre</td>
+                    <td>@item.Fecha?.ToString("dd/MM/yyyy")</td>
+                    <td>@item.Total?.ToString("C")</td>
+                    <td>@item.Estado</td>
+                    <td>
+                        <a href="@Url.Action("Details", new { id = item.IdCompra })" class="btn btn-info btn-sm">Detalles</a>
+                        <a href="@Url.Action("Edit", new { id = item.IdCompra })" class="btn btn-warning btn-sm">Editar</a>
+                        <a href="@Url.Action("Delete", new { id = item.IdCompra })" class="btn btn-danger btn-sm">Eliminar</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

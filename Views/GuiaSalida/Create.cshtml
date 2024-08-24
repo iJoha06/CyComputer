@@ -1,0 +1,104 @@
+﻿@model CyComputer.Models.GuiaSalidum
+
+@{
+    ViewData["Title"] = "Crear Guía de Salida";
+}
+
+<h2>Crear Guía de Salida</h2>
+
+<form asp-action="Create" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="form-group">
+        <label asp-for="IdCliente" class="control-label">Cliente</label>
+        <select asp-for="IdCliente" class="form-control" asp-items="@(new SelectList(ViewData["Clientes"] as List<CyComputer.Models.Cliente>, "IdCliente", "Nombre"))">
+            <option value="">Seleccione un cliente</option>
+        </select>
+        <span asp-validation-for="IdCliente" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Descripcion" class="control-label">Descripción</label>
+        <input asp-for="Descripcion" class="form-control" />
+        <span asp-validation-for="Descripcion" class="text-danger"></span>
+    </div>
+
+    <h4>Productos</h4>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Producto</th>
+                <th>Cantidad</th>
+                <th>Precio Unitario</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody id="productosBody">
+            <tr>
+                <td>
+                    <select class="form-control" name="detalles[0].IdProducto">
+                        <option value="">Seleccione un producto</option>
+                        @foreach (var producto in ViewData["Productos"] as List<CyComputer.Models.Producto>)
+                        {
+                            <option value="@producto.IdProducto">@producto.Nombre</option>
+                        }
+                    </select>
+                </td>
+                <td>
+                    <input type="number" name="detalles[0].Cantidad" class="form-control" />
+                </td>
+                <td>
+                    <input type="number" name="detalles[0].Precio" class="form-control" step="0.01" />
+                </td>
+                <td>
+                    <button type="button" class="btn btn-danger" onclick="removeRow(this)">Eliminar</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <button type="button" class="btn btn-secondary" onclick="addRow()">Agregar Producto</button>
+
+    <div class="form-group mt-2">
+        <input type="submit" value="Guardar" class="btn btn-primary" />
+    </div>
+</form>
+
+@section Scripts {
+    <script>
+        var rowCount = 1;
+
+        function addRow() {
+            var tableBody = document.getElementById("productosBody");
+            var row = document.createElement("tr");
+
+            row.innerHTML = `
+                        <td>
+                            <select class="form-control" name="detalles[${rowCount}].IdProducto">
+                                <option value="">Seleccione un producto</option>
+                                @foreach (var producto in ViewData["Productos"] as List<CyComputer.Models.Producto>)
+                                {
+                                    <option value="@producto.IdProducto">@producto.Nombre</option>
+                                }
+                            </select>
+                        </td>
+                        <td>
+                            <input type="number" name="detalles[${rowCount}].Cantidad" class="form-control" />
+                        </td>
+                        <td>
+                            <input type="number" name="detalles[${rowCount}].Precio" class="form-control" step="0.01" />
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-danger" onclick="removeRow(this)">Eliminar</button>
+                        </td>
+                    `;
+
+            tableBody.appendChild(row);
+            rowCount++;
+        }
+
+        function removeRow(button) {
+            var row = button.parentNode.parentNode;
+            row.parentNode.removeChild(row);
+        }
+    </script>
+}

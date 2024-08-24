@@ -1,0 +1,29 @@
+﻿@model CyComputer.Models.Devolucion
+
+<h2>Eliminar Devolución</h2>
+
+<div>
+    <h4>¿Está seguro de que desea eliminar esta devolución?</h4>
+    <dl class="dl-horizontal">
+        <dt>ID</dt>
+        <dd>@Model.Id</dd>
+        <dt>Producto</dt>
+        <dd>@Model.NombreProducto</dd>
+        <dt>Cantidad</dt>
+        <dd>@Model.Cantidad</dd>
+        <dt>Motivo</dt>
+        <dd>@Model.Motivo</dd>
+        <dt>Tipo</dt>
+        <dd>@Model.TipoDevolucion</dd>
+        <dt>Fecha</dt>
+        <dd>@Model.Fecha.ToShortDateString()</dd>
+    </dl>
+
+    <form asp-action="DeleteConfirmed" method="post">
+        <input type="hidden" asp-for="Id" />
+        <div class="form-group">
+            <input type="submit" value="Eliminar" class="btn btn-danger" />
+            <a href="@Url.Action("Index", "Devoluciones")" class="btn btn-secondary">Cancelar</a>
+        </div>
+    </form>
+</div>

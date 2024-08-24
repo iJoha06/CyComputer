@@ -1,0 +1,86 @@
+﻿@model IEnumerable<CyComputer.Models.GuiaSalidum>
+
+@{
+    ViewData["Title"] = "Registro de Salida de Productos";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div class="mb-3">
+    <a asp-action="Create" class="btn btn-primary">Nueva Guía de Salida</a>
+</div>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Cliente</th>
+            <th>Fecha</th>
+            <th>Descripción</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Any())
+        {
+            @foreach (var guia in Model)
+            {
+                <tr>
+                    <td>@guia.IdGuiaSalida</td>
+                    <td>@guia.IdClienteNavigation.Nombre</td>
+                    <td>@guia.Fecha?.ToString("dd/MM/yyyy")</td>
+                    <td>@guia.Descripcion</td>
+                    <td>
+                        <a asp-action="Details" asp-route-id="@guia.IdGuiaSalida" class="btn btn-info">Detalles</a>
+                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal" data-id="@guia.IdGuiaSalida" data-cliente="@guia.IdClienteNavigation.Nombre">Eliminar</button>
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="6" class="text-center">No hay guías de entrada disponibles.</td>
+            </tr>
+        }
+    </tbody>
+</table>
+<!-- Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Confirmar Eliminación</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>¿Está seguro que desea eliminar la guía de salida?</p>
+            </div>
+            <div class="modal-footer">
+                <form id="deleteForm" method="post" asp-action="Delete">
+                    <input type="hidden" name="id" id="guiaId" value="" />
+                    <input type="submit" value="Eliminar" class="btn btn-danger" />
+                </form>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        var deleteModal = document.getElementById('deleteModal');
+        deleteModal.addEventListener('show.bs.modal', function (event) {
+            var button = event.relatedTarget;
+            var id = button.getAttribute('data-id');
+
+            var modalForm = deleteModal.querySelector('.modal-footer #deleteForm #guiaId');
+
+            modalForm.value = id;
+        });
+    </script>
+}
+
+

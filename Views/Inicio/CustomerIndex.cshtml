@@ -1,0 +1,305 @@
+﻿@{
+    ViewData["Title"] = "Customer Index";
+    Layout = "~/Views/Shared/_CustomerLayout.cshtml"; // Usamos un layout específico sin sidebar
+}
+@section Estilos {
+    <link rel="stylesheet" href="~/css/custom-page.css" asp-append-version="true">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+}
+<main>
+        <section id="productos">
+            <div class="container">
+                <h2>Productos disponibles</h2>
+                <hr>
+                <div class="row row-cols-1 row-cols-md-4 g-4" id="lista-productos">
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="modal-carrito" class="modal">
+        <div class="modal-contenido">
+            <span class="cerrar-modal">&times;</span>
+            <div class="carrito-productos">
+                <h2>Carrito de Compras</h2>
+                <div id="lista-carrito" class="lista-carrito">
+                </div>
+                <div id="total-modal">
+                    <p id="total-texto">Total: $ <span id="total">0.00</span></p>
+                    <button id="vaciar-carrito">Vaciar Carrito</button>
+                    <button id="pagar">Pagar</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <div id="modal-pago" class="modal">
+        <div class="modal-contenido">
+            <span class="cerrar-modal">&times;</span>
+            <h2>¡Pago Realizado!</h2>
+            <p>Su pago ha sido procesado exitosamente</p>
+            <button id="cerrar-mensaje">Cerrar</button>
+        </div>
+    </div>
+
+    <div id="mensaje-agregado" class="mensaje-oculto">
+        Producto agregado al carrito. <a href="#carrito" id="enlace-carrito">Ver carrito</a>
+    </div>
+
+    <div id="mensaje-resultados" class="mensaje-resultados">
+        Resultados Obtenidos.
+    </div>
+
+    @section Scripts {
+    <script>
+    $(document).ready(function () {
+        var listaProductos = [
+                { id: 1, nombre: "Memoria RAM 16GB", precio: 79.99, imagen: "/img/ram.jpg" },
+                { id: 2, nombre: "Procesador Intel Core i7", precio: 299.99, imagen: "/img/procesador.jpg" },
+                { id: 3, nombre: "Mouse Logitech G502", precio: 49.99, imagen: "/img/mouse.png" },
+                { id: 4, nombre: "Case NZXT H510", precio: 69.99, imagen: "/img/case.jpg" },
+                { id: 5, nombre: "Tarjeta Gráfica NVIDIA RTX 3070", precio: 499.99, imagen: "/img/tarjetagrafica.jpg" },
+                { id: 6, nombre: "Teclado Mecánico Corsair K95", precio: 129.99, imagen: "/img/teclado.jpg" },
+                { id: 7, nombre: "Disco Duro SSD 1TB", precio: 109.99, imagen: "/img/disco.png" },
+                { id: 8, nombre: "Fuente de Poder 750W", precio: 89.99, imagen: "/img/fuente.png" }
+        ];
+
+        cargarProductos();
+
+        $("#icono-carrito").click(function () {
+            mostrarCarritoModal();
+        });
+
+        $(".cerrar-modal").click(function () {
+            cerrarModal("#modal-carrito");
+        });
+
+        $("#cerrar-mensaje").click(function () {
+            cerrarModal('#modal-pago');
+        });
+
+        $('#vaciar-carrito').click(function () {
+            vaciarCarrito();
+        });
+
+        $('#pagar').click(function () {
+            if (carrito.length === 0) {
+                mostrarMensaje("Debe agregar un producto para pagar.");
+            } else {
+                procesarPago();
+            }
+        });
+
+        $("#enlace-carrito").click(function (event) {
+            event.preventDefault();
+            mostrarCarritoModal();
+        });
+
+        $("#lista-carrito").on("click", ".aumentar-cantidad", function () {
+            var idProducto = $(this).data("id");
+            aumentarCantidad(idProducto);
+        });
+
+        $("#lista-carrito").on("click", ".disminuir-cantidad", function () {
+            var idProducto = $(this).data("id");
+            disminuirCantidad(idProducto);
+        });
+
+        $("#lista-carrito").on("click", ".eliminar-producto", function () {
+            var idProducto = $(this).data("id");
+            eliminarProducto(idProducto);
+        });
+
+        $("#search-btn").click(function (event) {
+            event.preventDefault();
+            buscarProducto();
+        });
+
+        $("#enlace-ver-carrito").click(function (event) {
+            event.preventDefault();
+            mostrarCarritoModal();
+        });
+
+        function cargarProductos() {
+            mostrarProductos(listaProductos);
+        }
+
+        function mostrarProductos(productos) {
+            var listaProductosHTML = "";
+            productos.forEach(function (producto) {
+                listaProductosHTML += `
+                  <li class="producto">
+                      <img src="${producto.imagen}" alt="${producto.nombre}">
+                      <h3>${producto.nombre}</h3>
+                      <p>Precio: $${producto.precio.toFixed(2)}</p>
+                      <button class="agregar-carrito" data-id="${producto.id}">Agregar al carrito</button>
+                  </li>
+              `;
+            });
+            $("#lista-productos").html(listaProductosHTML);
+
+            $('.agregar-carrito').click(function () {
+                var idProducto = $(this).data('id');
+                var productoSeleccionado = listaProductos.find(function (producto) {
+                    return producto.id === idProducto;
+                });
+
+                agregarProductoCarrito(productoSeleccionado);
+            });
+        }
+
+        var carrito = [];
+
+        function agregarProductoCarrito(producto) {
+            var productoExistente = carrito.find(function (item) {
+                return item.id === producto.id;
+            });
+            if (productoExistente) {
+                productoExistente.cantidad++;
+            } else {
+                productoExistente = {
+                    id: producto.id,
+                    nombre: producto.nombre,
+                    precio: producto.precio,
+                    cantidad: 1,
+                    imagen: producto.imagen,
+                };
+                carrito.push(productoExistente);
+            }
+            actualizarCarritoModal();
+            mostrarMensajeAgregado();
+        }
+
+        function mostrarMensajeAgregado() {
+            var mensaje = $("#mensaje-agregado");
+            mensaje.fadeIn();
+
+            setTimeout(function () {
+                mensaje.fadeOut();
+            }, 2000);
+        }
+
+        function actualizarCarritoModal() {
+            var listaCarrito = $("#lista-carrito");
+            listaCarrito.empty();
+
+            carrito.forEach(function (item) {
+                var ProductoHTML = `
+                  <div class="producto-carrito">
+                      <img src="${item.imagen}" alt="Imagen del producto">
+                      <div class="producto-info">
+                          <h3>${item.nombre}</h3>
+                          <p>Precio unitario: $${item.precio.toFixed(2)}</p>
+                          <p>Total: $${(item.precio * item.cantidad).toFixed(2)}</p>
+                      </div>
+                      <div class="producto-acciones">
+                          <div class="cantidad">
+                              <button class="disminuir-cantidad" data-id="${item.id}">-</button>
+                              <button class="aumentar-cantidad" data-id="${item.id}">+</button>
+                          </div>
+                          <button class="eliminar-producto" data-id="${item.id}">Eliminar</button>
+                      </div>
+                  </div>
+              `;
+                listaCarrito.append(ProductoHTML);
+            });
+
+            var total = carrito.reduce(function (acc, item) {
+                return acc + item.precio * item.cantidad;
+            }, 0);
+            $("#total").text(total.toFixed(2));
+            $("#cantidad-carrito").text(carrito.length);
+        }
+
+        function aumentarCantidad(idProducto) {
+            var producto = carrito.find(function (item) {
+                return item.id === idProducto;
+            });
+            if (producto) {
+                producto.cantidad++;
+                actualizarCarritoModal();
+            }
+        }
+
+        function disminuirCantidad(idProducto) {
+            var producto = carrito.find(function (item) {
+                return item.id === idProducto;
+            });
+            if (producto && producto.cantidad > 1) {
+                producto.cantidad--;
+                actualizarCarritoModal();
+            }
+        }
+
+        function eliminarProducto(idProducto) {
+            carrito = carrito.filter(function (item) {
+                return item.id !== idProducto;
+            });
+            actualizarCarritoModal();
+        }
+
+        function vaciarCarrito() {
+            carrito = [];
+            actualizarCarritoModal();
+        }
+
+        function procesarPago() {
+            if (carrito.length === 0) {
+                mostrarMensaje("Debe agregar un producto para pagar.");
+            } else {
+                mostrarModal('#modal-pago');
+                vaciarCarrito();
+            }
+        }
+
+        function mostrarCarritoModal() {
+            actualizarCarritoModal();
+            mostrarModal("#modal-carrito");
+        }
+
+        function mostrarMensaje(mensaje) {
+            $("#mensaje").text(mensaje);
+            mostrarModal('#modal-mensaje');
+        }
+
+        function mostrarModal(idModal) {
+            $(idModal).fadeIn();
+        }
+
+        function cerrarModal(idModal) {
+            $(idModal).fadeOut();
+        }
+
+        function mostrarMensajeResultados() {
+            var mensaje = $("#mensaje-resultados");
+            mensaje.fadeIn();
+
+            setTimeout(function () {
+                mensaje.fadeOut();
+            }, 2000);
+        }
+
+        function buscarProducto() {
+            var nombreProducto = $('#inputBuscar').val().trim();
+            if (nombreProducto === '') {
+                alert('Por favor, ingrese el nombre del producto');
+                return;
+            }
+
+            var resultados = listaProductos.filter(function (producto) {
+                return producto.nombre.toLowerCase().includes(nombreProducto.toLowerCase());
+            });
+            mostrarProductos(resultados);
+            mostrarMensajeResultados()
+        }
+    });
+    </script>
+}
+
+
+
+
+</main>

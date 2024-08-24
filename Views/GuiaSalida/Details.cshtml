@@ -1,0 +1,63 @@
+﻿@model CyComputer.Models.GuiaSalidum
+
+@{
+    ViewData["Title"] = "Detalles de Guía de Salida";
+}
+
+<h2>Detalles de Guía de Salida</h2>
+
+<div>
+    <h4>Guía de Salida</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            ID
+        </dt>
+        <dd class="col-sm-10">
+            @Model.IdGuiaSalida
+        </dd>
+        <dt class="col-sm-2">
+            Cliente
+        </dt>
+        <dd class="col-sm-10">
+            @Model.IdClienteNavigation.Nombre
+        </dd>
+        <dt class="col-sm-2">
+            Fecha
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Fecha?.ToString("dd/MM/yyyy")
+        </dd>
+        <dt class="col-sm-2">
+            Descripción
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Descripcion
+        </dd>
+    </dl>
+
+    <h4>Productos</h4>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Producto</th>
+                <th>Cantidad</th>
+                <th>Precio Unitario</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var detalle in Model.DetalleSalida)
+            {
+                <tr>
+                    <td>@detalle.IdProductoNavigation.Nombre</td>
+                    <td>@detalle.Cantidad</td>
+                    <td>@detalle.Precio?.ToString("C")</td>
+                    <td>@((detalle.Cantidad ?? 0) * (detalle.Precio ?? 0))</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <a asp-action="Index" class="btn btn-secondary">Volver a la lista</a>
+</div>

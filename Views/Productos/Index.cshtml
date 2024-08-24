@@ -1,0 +1,82 @@
+﻿@model IEnumerable<CyComputer.Models.Producto>
+
+@{
+    ViewData["Title"] = "Productos";
+}
+
+<h2>Productos</h2>
+
+<p>
+    <a class="btn btn-primary" data-toggle="modal" data-target="#addProductModal">Crear Nuevo Producto</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.First().Nombre)</th>
+            <th>@Html.DisplayNameFor(model => model.First().Descripcion)</th>
+            <th>@Html.DisplayNameFor(model => model.First().Precio)</th>
+            <th>@Html.DisplayNameFor(model => model.First().Stock)</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.Nombre)</td>
+                <td>@Html.DisplayFor(modelItem => item.Descripcion)</td>
+                <td>@Html.DisplayFor(modelItem => item.Precio)</td>
+                <td>@Html.DisplayFor(modelItem => item.Stock)</td>
+                <td>
+                    <a class="btn btn-info" asp-action="Edit" asp-route-id="@item.IdProducto">Editar</a> |
+                    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.IdProducto">Eliminar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<!-- Modal -->
+<div class="modal fade" id="addProductModal" tabindex="-1" role="dialog" aria-labelledby="addProductModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addProductModalLabel">Crear Nuevo Producto</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form asp-action="Create" method="post" id="createProductForm">
+                    <div class="form-group">
+                        <label for="Nombre">Nombre</label>
+                        <input type="text" class="form-control" id="Nombre" name="Nombre" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="Descripcion">Descripción</label>
+                        <textarea class="form-control" id="Descripcion" name="Descripcion" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="Precio">Precio</label>
+                        <input type="number" class="form-control" id="Precio" name="Precio" step="0.01" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="Stock">Stock</label>
+                        <input type="number" class="form-control" id="Stock" name="Stock" required>
+                    </div>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Crear</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            // Optionally, you can add more JavaScript here to handle form submission or additional functionality
+        });
+    </script>
+}

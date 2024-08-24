@@ -1,0 +1,51 @@
+﻿@model IEnumerable<CyComputer.Models.GuiaEntradum>
+
+@{
+    ViewData["Title"] = "Registro de Entrada de Productos";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div class="mb-3">
+    <a asp-action="Create" class="btn btn-primary">Nueva Guía de Entrada</a>
+</div>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Proveedor</th>
+            <th>Almacén</th>
+            <th>Fecha</th>
+            <th>Descripción</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Any())
+        {
+            foreach (var guia in Model)
+            {
+                <tr>
+                    <td>@guia.IdGuiaEntrada</td>
+                    <td>@guia.IdProveedorNavigation?.Nombre</td>
+                    <td>@guia.IdAlmacenNavigation?.Nombre</td>
+                    <td>@guia.Fecha?.ToString("dd/MM/yyyy")</td>
+                    <td>@guia.Descripcion</td>
+                    <td>
+                        <!-- Botones de acciones (por ejemplo, Editar, Detalles, Eliminar) -->
+                        <a asp-action="Edit" asp-route-id="@guia.IdGuiaEntrada" class="btn btn-warning btn-sm">Editar</a>
+                        <a asp-action="Details" asp-route-id="@guia.IdGuiaEntrada" class="btn btn-info btn-sm">Detalles</a>
+                        <a asp-action="Delete" asp-route-id="@guia.IdGuiaEntrada" class="btn btn-danger btn-sm">Eliminar</a>
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="6" class="text-center">No hay guías de entrada disponibles.</td>
+            </tr>
+        }
+    </tbody>
+</table>

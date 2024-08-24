@@ -1,0 +1,548 @@
+﻿/* Ajusta la alineación de los elementos en el contenedor principal */
+.top-navbar .container {
+    display: flex;
+    justify-content: space-between; /* Distribuye los elementos entre los extremos */
+    align-items: center; /* Centra verticalmente los elementos */
+    padding: 0 20px; /* Agrega un poco de padding a los lados si es necesario */
+}
+
+/* Estilo para la sección del logo */
+.logo-section {
+    display: flex;
+    align-items: center;
+    white-space: nowrap; /* Evita que el texto se envuelva */
+}
+
+    /* Estilo para el logo */
+    .logo-section .logo {
+        width: 50px;
+        margin-right: 10px; /* Espacio entre el logo y el texto */
+    }
+
+    /* Estilo para el nombre de la empresa */
+    .logo-section .company-name {
+        font-size: 20px;
+        font-weight: bold;
+        color: whitesmoke;
+    }
+
+/* Alineación del perfil de usuario */
+.ml-auto {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+}
+
+/* Estilo para el ícono de usuario */
+.xp-profilebar img {
+    width: 40px;
+    border-radius: 50%;
+}
+
+/* navbar superior */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+}
+
+.navbar-superior {
+    width: 100%;
+    height: 7vh;
+    background-color: whitesmoke;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: space-between;
+    padding: 0 20px;
+}
+
+.redes-sociales {
+    margin-left: 45px;
+    display: flex;
+}
+
+    .redes-sociales i {
+        font-size: 20px;
+        color: #fb942b;
+        margin-left: 10px;
+        cursor: pointer;
+    }
+
+.iconos-derecha {
+    display: flex;
+    align-items: center;
+}
+
+#icono-usuario {
+    margin-left: 10px;
+    font-size: 22px;
+    color: #fb942b;
+    margin-bottom: 4px;
+}
+
+.icono-carrito i {
+    position: relative;
+    display: inline-block;
+    color: #fb942b;
+    font-size: 22px;
+    margin-left: 10px;
+    margin-right: 60px;
+    cursor: pointer;
+}
+/* fin navbar superior */
+
+
+
+/* navbar principal */
+
+.navbar-principal {
+    width: 100%;
+    height: auto;
+    background-color: whitesmoke;
+}
+
+#navbar {
+    background-color: #132c63;
+    font-size: 16px;
+}
+
+    #navbar .nav-link {
+        color: white;
+        font-size: 20px;
+        font-weight: bold;
+        margin-left: 5px;
+        transition: 0.5s ease;
+    }
+
+        #navbar .nav-link:hover {
+            color: white;
+            border-radius: 5px;
+        }
+
+#search-btn {
+    color: white;
+    border: 1px solid white;
+}
+
+    #search-btn:hover {
+        background-color: whitesmoke;
+        color: #132c63;
+        border: 1px solid white;
+    }
+
+.navbar .navbar-brand {
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    margin-right: 35px;
+}
+
+    .navbar .navbar-brand:hover {
+        color: white;
+        font-size: 20px;
+        font-weight: bold;
+        margin-right: 35px;
+    }
+
+    .navbar .navbar-brand img {
+        height: 70px;
+        width: auto;
+        padding-right: 8px;
+    }
+
+
+/* carousel */
+
+#carouselExampleIndicators .carousel-item img {
+    width: 1200px;
+    height: 480px;
+}
+
+
+
+/* productos */
+#lista-productos .producto {
+    margin: 15px;
+    padding: 20px;
+    width: 270px;
+    height: auto;
+    text-align: center;
+    background-color: var(--bs-white);
+    border: 1px solid var(--bs-gray-300);
+    border-radius: var(--bs-border-radius);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+    #lista-productos .producto:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+
+#lista-productos {
+    list-style-type: none;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 0;
+}
+
+
+#productos {
+    margin-top: 50px;
+    margin-bottom: 50px;
+    padding: 0;
+}
+
+#icono-carrito > span.material-icons{
+margin-top: 10px;
+margin-right: 0px;
+}
+
+
+.producto img {
+    max-width: 168px;
+    height: 168px;
+}
+
+#productos > div > h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    margin-left: 395px;
+    margin-top: -20px;
+}
+}
+.producto h3 {
+    font-size: 1.25rem;
+    margin-top: 1rem;
+    margin-bottom: 5px;
+    color: #333;
+}
+.producto p {
+    color: var(--bs-gray);
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+#lista-productos .producto .agregar-carrito {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 10px 20px;
+    font-size: 14px;
+    background-color: #d47c24;
+    color: var(--bs-white);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+    #lista-productos .producto .agregar-carrito:hover {
+        background-color: #b7691e;
+    }
+
+@media (max-width: 767px) {
+    .row-cols-md-3 .col {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+}
+/* FIN productos */
+
+
+
+/* footer */
+#creditos {
+    margin-left: 50px;
+    display: inline;
+    white-space: nowrap;
+}
+
+.container-footer {
+    margin: 0;
+    padding: 0;
+}
+
+    .container-footer #seccion-footer {
+        background-color: #d47c24;
+    }
+
+#footer-redes {
+    margin-right: 70px;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+footer {
+    margin: 0;
+    padding: 0;
+}
+/* FIN footer */
+
+
+/* carrito */
+#cantidad-carrito {
+   
+    background-color: #132c63;
+    color: white;
+    font-size: 14px;
+    width: 18px;
+    height: 18px;
+  
+    align-items: center;
+    border-radius: 50%;
+    margin-right: 8px;
+    margin-bottom: 85px;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    overflow: auto;
+    padding-top: 20px;
+}
+
+.modal-contenido {
+    background-color: whitesmoke;
+    margin: 5% auto;
+    padding: 20px;
+    border: 1px solid;
+    width: 80%;
+    max-width: 500px;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px;
+    position: relative;
+    text-align: center;
+}
+
+.cerrar-modal {
+    color: brown;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+    .cerrar-modal:hover, .cerrar-modal:focus {
+        color: antiquewhite;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+.carrito-productos {
+    text-align: left;
+}
+
+.lista-carrito {
+    margin-bottom: 29px;
+}
+
+.total-modal {
+    font-weight: bold;
+    margin-top: 10px;
+    text-align: right;
+}
+
+    .total-modal p {
+        margin-bottom: 10px;
+        font-size: 8px;
+    }
+
+    .total-modal button {
+        margin-left: 10px;
+        background-color: brown;
+        color: whitesmoke;
+        border: none;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+        .total-modal button:hover {
+            background-color: antiquewhite;
+        }
+
+#total {
+    font-size: 1.2rem;
+}
+
+#total-texto {
+    font-size: 18px;
+}
+
+.producto-carrito img {
+    max-width: 115px;
+    height: auto;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgb(219, 128, 10);
+}
+
+.producto-carrito {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    border-bottom: 1px solid grey;
+}
+
+.cantidad {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.disminuir-cantidad,
+.aumentar-cantidad,
+.eliminar-producto,
+#vaciar-carrito,
+#pagar,
+#cerrar-mensaje {
+    display: inline-block;
+    padding: 3px 8px;
+    margin: 0 5px;
+    font-size: 1.1rem;
+    background-color: #132c63;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.eliminar-producto {
+    margin-top: 10px;
+    font-size: 1rem;
+}
+
+#vaciar-carrito,
+#pagar {
+    margin-left: -2px;
+    font-size: 1rem;
+}
+
+    .disminuir-cantidad:hover,
+    .aumentar-cantidad:hover,
+    .eliminar-producto:hover,
+    #vaciar-carrito:hover,
+    #pagar:hover,
+    #cerrar-mensaje:hover {
+        background-color: gainsboro;
+        color: black;
+    }
+
+
+.mensaje-oculto {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: whitesmoke;
+    color: midnightblue;
+    font-weight: bold;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+}
+#enlace-carrito {
+    background-color: whitesmoke;
+    color: midnightblue;
+    font-weight: bold;
+}
+#mensaje-agregado a {
+    background-color: whitesmoke;
+    color: midnightblue;
+    font-weight: bold;
+    text-decoration: underline;
+    margin-left: 10px;
+}
+
+
+.mensaje-resultados {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #132c63;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+}
+
+
+footer {
+    padding: 0px 0;
+}
+
+    footer h5 {
+        font-size: 18px;
+        margin-bottom: 15px;
+        color: #ffffff;
+    }
+
+    footer p, footer ul {
+        font-size: 14px;
+        color: #cccccc;
+    }
+
+    footer a {
+        color: #d47c24;
+        text-decoration: none;
+    }
+
+        footer a:hover {
+            text-decoration: underline;
+            color: #b7691e;
+        }
+
+    footer .list-unstyled li {
+        margin-bottom: 5px;
+    }
+
+    footer .fas {
+        margin-right: 8px;
+    }
+
+    footer .container {
+        padding-top: 0.5rem; /* Reducir el padding superior */
+    }
+
+        footer .container .row > div {
+            margin-bottom: 0; /* Reducir el margen inferior de las columnas */
+        }
+
+    footer .bg-light {
+        padding-top: 0.5rem; /* Reducir el padding superior de la franja inferior */
+        padding-bottom: 0.5rem; /* Reducir el padding inferior de la franja inferior */
+    }
+
+    footer p {
+        margin-bottom: 0; /* Reducir el margen inferior de los párrafos */
+    }
+
+    footer h5 {
+        margin-bottom: 0; /* Reducir el margen inferior de los encabezados */
+    }
